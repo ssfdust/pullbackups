@@ -1,0 +1,21 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/a3c87ab5/
+DOCKER_PATH	pullbackups.py	/^DOCKER_PATH = "\/var\/lib\/pgadmin\/storage\/"$/;"	v
+app	pullbackups.py	/^app = gui("sqls下载", "400x200")$/;"	v
+clean	pullbackups.py	/^def clean(client):$/;"	f
+copy_to_local	pullbackups.py	/^def copy_to_local(client, dest):$/;"	f
+create_client	pullbackups.py	/^def create_client(host, username, password):$/;"	f
+dump_backupfiles	pullbackups.py	/^def dump_backupfiles(client, docker_path=DOCKER_PATH, dump_path="\/tmp"):$/;"	f
+gui_run	pullbackups.py	/^def gui_run():$/;"	f
+open_explorer	pullbackups.py	/^def open_explorer(folder):$/;"	f
+press	pullbackups.py	/^def press(button):$/;"	f
+print_exec	pullbackups.py	/^def print_exec(client, command):$/;"	f
+print_info	pullbackups.py	/^def print_info(handler):$/;"	f
+process	pullbackups.py	/^def process(host, username, password, dest):$/;"	f
+progress	pullbackups.py	/^def progress(filename, size, sent):$/;"	f

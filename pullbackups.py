@@ -4,10 +4,21 @@ from scp import SCPClient
 import os
 import sys
 from appJar import gui
+import platform
+import subprocess
 
 DOCKER_PATH = "/var/lib/pgadmin/storage/"
 
 app = gui("sqls下载", "400x200")
+
+def open_explorer(folder):
+    if platform.system() == "Linux":
+        subprocess.run(["xdg-open", folder])
+    elif platform.system() == "Windows":
+        os.startfile(folder)
+    elif platform.system() == "Darwin":
+        subprocess.run(["open", folder])
+
 
 def print_info(handler):
     out = handler.read().decode()
@@ -30,7 +41,7 @@ def create_client(host, username, password):
 
 def dump_backupfiles(client, docker_path=DOCKER_PATH, dump_path="/tmp"):
     _, stdout, _ = client.exec_command(
-        'docker ps -f name=pgadmin4 --format "{{.ID}}"', timeout=None
+        'docker ps -f name=pgadmin --format "{{.ID}}"', timeout=None
     )
     docker_id = stdout.read().decode().strip()
     client.exec_command(f"docker cp {docker_id}:{docker_path} {dump_path}")
@@ -59,13 +70,18 @@ def press(button):
         usr = app.getEntry("Username")
         pwd = app.getEntry("Password")
         host = app.getEntry("Ip")
+        directory = app.getEntry("path")
+        if not directory:
+            directory = os.path.expanduser("~/sqls")
         if usr and pwd and host:
-            process(host, usr, pwd)
+            process(host, usr, pwd, directory)
 
 def gui_run():
     app.setFont(13)
 
     app.addLabel("title", "下载sqls")
+    app.addDirectoryEntry("path")
+    app.setEntryDefault("path", os.path.expanduser("~/sqls"))
     app.addLabelEntry("Ip")
     app.addLabelEntry("Username")
     app.addLabelSecretEntry("Password")
@@ -77,13 +93,13 @@ def gui_run():
     app.go()
 
 
-def process(host, username, password):
+def process(host, username, password, dest):
     client = create_client(host, username, password)
     dump_backupfiles(client)
-    copy_to_local(client, "sqls")
+    copy_to_local(client, dest)
     clean(client)
-    path = os.path.abspath("sqls")
-    os.system(f"explorer.exe {path}")
+    path = os.path.abspath(dest)
+    open_explorer(path)
 
 
 if __name__ == "__main__":
